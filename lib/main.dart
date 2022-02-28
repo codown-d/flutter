@@ -10,112 +10,118 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Startup Name Generator',
-      theme: ThemeData(
-        primaryColor: Colors.white,
-      ),
-      home: const RandomWords(),
+      home: RandomWords(),
     );
   }
 }
 
+Column _buildButtonColumn(Color color, IconData icon, String label) {
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Icon(icon, color: color),
+      Container(
+        margin: const EdgeInsets.only(top: 8),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            color: color,
+          ),
+        ),
+      ),
+    ],
+  );
+}
 class RandomWords extends StatefulWidget {
   const RandomWords({Key? key}) : super(key: key);
 
   @override
   _RandomWordsState createState() => _RandomWordsState();
 }
-
 class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final Set<WordPair> _saved = new Set<WordPair>(); // 新增本行
-  final _biggerFont = const TextStyle(fontSize: 18);
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemBuilder: /*1*/ (context, i) {
-        if (i.isOdd) {
-          return const Divider(); /*2*/
-        }
-
-        final index = i ~/ 2; /*3*/
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-        }
-        return _buildRow(_suggestions[index]);
-      },
-    );
-  }
-
-  Widget _buildRow(WordPair pair) {
-    final bool alreadySaved = _saved.contains(pair); // 新增本行
-
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        // 增加如下 9 行代码...
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
-      },
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final Iterable<ListTile> tiles = _saved.map(
-            (WordPair pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final List<Widget> divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
-
-          return Scaffold(
-            // 新增 6 行代码开始 ...
-            appBar: AppBar(
-              title: const Text('Saved Suggestions'),
-            ),
-            body: new ListView(children: divided),
-          ); // ... 新增代码段结束.
-        },
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
+    Color color = Theme.of(context).primaryColor;
+    Widget buttonSection = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildButtonColumn(color, Icons.call, 'CALL'),
+        _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
+        _buildButtonColumn(color, Icons.share, 'SHARE'),
+      ],
+    );
+    Widget titleSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: Row(
+        children: [
+          Expanded(
+            /*1*/
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /*2*/
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: const Text(
+                    'Oeschinen Lake Campground',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  'Kandersteg, Switzerland',
+                  style: TextStyle(
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          /*3*/
+          Icon(
+            Icons.star,
+            color: Colors.red[500],
+          ),
+          const Text('41'),
+        ],
+      ),
+    );
+    Widget textSection = const Padding(
+      padding: EdgeInsets.all(32),
+      child: Text(
+        'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+            'Alps. Situated 1,578 meters above sea level, it is one of the '
+            'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+            'half-hour walk through pastures and pine forest, leads you to the '
+            'lake, which warms to 20 degrees Celsius in the summer. Activities '
+            'enjoyed here include rowing, and riding the summer toboggan run.',
+        softWrap: true,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Startup Name Generator'),
-        actions: <Widget>[
-          // 新增代码开始 ...
-          new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
-        ],
       ),
-      body: _buildSuggestions(),
+      body: ListView(
+      children: <Widget>[
+        Image.asset(
+          'images/lake.png',
+          width: 600,
+          height: 240,
+          fit: BoxFit.cover,
+        ),
+        titleSection,
+        buttonSection,
+        textSection
+      ],
+    ),
     );
   }
 }
