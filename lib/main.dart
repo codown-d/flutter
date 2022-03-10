@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 //import 'Form.dart';
 import 'Checkbox.dart';
+import 'Layout.dart';
 import 'RandomWords.dart';
 import 'TapboxA.dart';
 //import 'TapboxB.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       //home: RandomWords(),
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
-        body: const MyStatefulWidget(),
+        body: MyWidget(),
       ),
     );
   }
