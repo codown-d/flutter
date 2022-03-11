@@ -8,10 +8,20 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      textBaseline: TextBaseline.alphabetic,
-      children: const [
-        Text(
+      children: [
+        const Icon(
+          Icons.widgets,
+          size: 50,
+          color: Colors.blue,
+        ),
+        const Icon(
+          Icons.widgets,
+          size: 50,
+          color: Colors.red,
+        ),
+        Image.network(
+            'https://raw.githubusercontent.com/flutter/website/master/examples/layout/sizing/images/pic1.jpg'),
+        const Text(
           'Hey!',
           style: TextStyle(
             fontSize: 30,
@@ -19,7 +29,7 @@ class MyWidget extends StatelessWidget {
             color: Colors.blue,
           ),
         ),
-        Text(
+        const Text(
           'Hey!',
           style: TextStyle(
             fontSize: 50,
@@ -27,7 +37,7 @@ class MyWidget extends StatelessWidget {
             color: Colors.green,
           ),
         ),
-        Text(
+        const Text(
           'Hey!',
           style: TextStyle(
             fontSize: 40,
