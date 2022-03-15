@@ -32,10 +32,39 @@ Widget textSection1 = Padding(
   child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: const [
-      Text('123 Main Street', style: TextStyle(
-        fontWeight: FontWeight.bold,
-      )),
+      Text('123 Main Street',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          )),
       Text('(415 555-0198)'),
+    ],
+  ),
+);
+Widget textSection2 = Padding(
+  padding: const EdgeInsets.all(10),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: const [
+      Icon(
+        Icons.accessibility,
+        size: 24,
+        color: Colors.black,
+      ),
+      Icon(
+        Icons.timer,
+        size: 24,
+        color: Colors.black,
+      ),
+      Icon(
+        Icons.phone_android,
+        size: 24,
+        color: Colors.black,
+      ),
+      Icon(
+        Icons.phone_iphone,
+        size: 24,
+        color: Colors.black,
+      ),
     ],
   ),
 );
@@ -48,7 +77,7 @@ class MyWidget extends StatelessWidget {
     return Column(children: [
       textSection,
       textSection1,
-      textSection1,
+      textSection2,
     ]);
   }
 }
